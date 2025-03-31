@@ -13,6 +13,7 @@ public class Layer {
     public List<Perceptron> GetPerceptrons() {
         return perceptrons;
     }
+
     public List<Double> layerCompute(List<Double> data){
         return perceptrons.stream().map(perceptron -> perceptron.compute(data)).collect(Collectors.toCollection(ArrayList::new));
     }
@@ -21,5 +22,11 @@ public class Layer {
             perceptrons.get(i).updateWeights(data,decision.get(i));
         }
     }
-    //public void train(List<Integer> data)
+    public void train(List<List<Double>> data, List<List<Integer>> decision, int epochs){
+        for (int i = 0; i < epochs ; i++) {
+            for (int j = 0; j < decision.size(); j++) {
+                layerUpdate(data.get(j),decision.get(j));
+            }
+        }
+    }
 }

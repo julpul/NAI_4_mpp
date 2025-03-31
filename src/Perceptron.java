@@ -28,7 +28,7 @@ public class Perceptron {
         return 1/(1+Math.pow(Math.E, -net));
     }
     public double y_derivative(double y){
-        return y -(1-y);
+        return y*(1-y);
     }
 
     public void updateWeights(List<Double> input_data,int decision){
@@ -40,18 +40,8 @@ public class Perceptron {
     }
     public void updateTheta(double y,int decision){
         double y_derivative = y_derivative(y);
-        this.theta = theta+(decision-y)*y_derivative*eta;
+        this.theta = theta-(decision-y)*y_derivative*eta;
     }
-
-
-    public void train(List<List<Double>> data, List<Integer> decisions,int iterations){
-        for (int i = 0; i < iterations; i++) {
-            for (int j = 0; j < decisions.size(); j++) {
-                updateWeights(data.get(j),decisions.get(j));
-            }
-        }
-    }
-
 
     @Override
     public String toString() {

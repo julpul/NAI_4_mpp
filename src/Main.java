@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -20,31 +21,39 @@ public class Main{
     }
 
     public static void main(String[] args) throws IOException {
-        LanguageClassData.readDataFromFile(Path.of("C:\\Users\\julia\\OneDrive\\Pulpit\\NAI4\\src\\Data\\callas_PL"));
+        //LanguageClassData.readDataFromFile(Path.of("C:\\Users\\julia\\OneDrive\\Pulpit\\NAI4\\src\\Data\\callas_PL"));
 
-        List<LanguageClassData> languageClassDataList = collect_data(Path.of("C:\\Users\\julia\\OneDrive\\Pulpit\\NAI4\\src\\Data"));
-        List<List<Integer>> data = languageClassDataList.stream().map(e->e.numberOfLetters).collect(Collectors.toList());
-        List<List<Integer>> decisions = (List<List<Integer>>) languageClassDataList.stream().map(e->{
+        List<LanguageClassData> languageClassDataList = collect_data(Path.of("C:\\Users\\dell\\pjatk\\NAI_4_mpp\\src\\Data"));
+        List<List<Double>> data = languageClassDataList.stream().map(e->e.numberOfLetters).collect(Collectors.toList());
+        List<List<Integer>> decisions = languageClassDataList.stream().map(e->{
             List<Integer> list = new ArrayList<>(Collections.nCopies(3, 0));
             list.set(e.language.ordinal(), 1);
             return list;
         }).collect(Collectors.toList());
 
         Layer layer = new Layer();
-        layer.AddPerceptron(new Perceptron(26,1));
-        layer.AddPerceptron(new Perceptron(26,1));
-        layer.AddPerceptron(new Perceptron(26,1));
+        layer.AddPerceptron(new Perceptron(26,0.01));
+        layer.AddPerceptron(new Perceptron(26,0.01));
+        layer.AddPerceptron(new Perceptron(26,0.01));
 
-
-
-
-
-
-
-
-
-        /*System.out.println(languageClassDataList);
+        System.out.println(languageClassDataList);
         System.out.println(data);
-        System.out.println(decisions);*/
+        System.out.println(decisions);
+        System.out.println("_______++++++++++______________++++++++++++++_____________");
+
+        layer.train(data,decisions,10_000);
+
+
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+        LanguageClassData classData = LanguageClassData.readDataFromFile(Paths.get(line));
+        List<Double> doubleList = classData.numberOfLetters;
+        List<Integer> decisionslista = new ArrayList<>(Collections.nCopies(3, 0));
+        decisionslista.set(classData.language.ordinal(), 1);
+        System.out.println(doubleList);
+        System.out.println(decisionslista);
+        System.out.println(layer.layerCompute(doubleList));
+
+
     }
 }
