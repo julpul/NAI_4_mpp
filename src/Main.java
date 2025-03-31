@@ -32,16 +32,11 @@ public class Main{
         }).collect(Collectors.toList());
 
         Layer layer = new Layer();
-        layer.AddPerceptron(new Perceptron(26,0.01));
-        layer.AddPerceptron(new Perceptron(26,0.01));
-        layer.AddPerceptron(new Perceptron(26,0.01));
+        layer.AddPerceptron(new Perceptron(26,0.1));
+        layer.AddPerceptron(new Perceptron(26,0.1));
+        layer.AddPerceptron(new Perceptron(26,0.1));
 
-        System.out.println(languageClassDataList);
-        System.out.println(data);
-        System.out.println(decisions);
-        System.out.println("_______++++++++++______________++++++++++++++_____________");
-
-        layer.train(data,decisions,10_000);
+        layer.train(data,decisions,50_000);
 
 
         Scanner scanner = new Scanner(System.in);

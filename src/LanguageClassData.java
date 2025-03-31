@@ -35,6 +35,10 @@ public class LanguageClassData {
                 listOfCharacters.set(c-97,current+1);
             }
         }));
+        double total = listOfCharacters.stream().mapToDouble(Double::doubleValue).sum();
+        for (int i = 0; i < listOfCharacters.size(); i++) {
+            listOfCharacters.set(i, listOfCharacters.get(i) / total);
+        }
         return new LanguageClassData(listOfCharacters,language);
     }
 }
